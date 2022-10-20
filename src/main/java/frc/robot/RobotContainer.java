@@ -6,11 +6,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ExampleSubsystem;
-
+import frc.robot.subsystems.drive.DiffDriveSubsystem;
 
 
 /**
@@ -20,18 +22,34 @@ import frc.robot.subsystems.ExampleSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer
+
+
 {
+    private final static RobotContainer INSTANCE = new RobotContainer();
+
+    /**
+     * Returns the Singleton instance of this DiffDriveSubsystem. This static method
+     * should be used, rather than the constructor, to get the single instance
+     * of this class. For example: {@code DiffDriveSubsystem.getInstance();}
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static RobotContainer getInstance() {
+        return INSTANCE;
+    }
     // The robot's subsystems and commands are defined here...
     private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    
+
     private final ExampleCommand autoCommand = new ExampleCommand(exampleSubsystem);
-    
+    private final TankDrive driveCommand = new TankDrive();
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer()
+    private RobotContainer()
     {
         // Configure the button bindings
         configureButtonBindings();
+
+        DiffDriveSubsystem driveSubsystem = DiffDriveSubsystem.getInstance();
+        driveSubsystem.setDefaultCommand(driveCommand);
     }
     
     
@@ -46,6 +64,14 @@ public class RobotContainer
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
     }
+
+    public Joystick getDriverJoystick() {
+        return new Joystick(0);
+    }
+
+    public XboxController getOperatorJoystick() {
+        return new XboxController(1);
+    }
     
     
     /**
@@ -57,5 +83,9 @@ public class RobotContainer
     {
         // An ExampleCommand will run in autonomous
         return autoCommand;
+    }
+
+    public Command getTeleopCommand() {
+        return driveCommand;
     }
 }

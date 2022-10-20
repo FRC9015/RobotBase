@@ -13,4 +13,21 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    public static final class DriveConstants {
+
+        public final int LEFT_FRONT_MOTOR_PORT = 4;
+        public final int LEFT_BACK_MOTOR_PORT = 9;
+        public final int RIGHT_FRONT_MOTOR_PORT = 5;
+        public final int RIGHT_BACK_MOTOR_PORT = 1;
+
+        public final boolean LEFT_DRIVE_INVERTED = false;
+        public final boolean RIGHT_DRIVE_INVERTED = true;
+
+        public enum DifferentialControlScheme {
+            ARCADE,
+            TANK
+        }
+    }
+
+}
