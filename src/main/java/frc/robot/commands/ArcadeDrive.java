@@ -3,14 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.drive.DiffDriveSubsystem;
-public class TankDrive extends CommandBase {
+
+public class ArcadeDrive extends CommandBase {
     private final DiffDriveSubsystem diffDriveSubsystem = DiffDriveSubsystem.getInstance();
 
-    public TankDrive() {
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
+    public ArcadeDrive() {
         addRequirements(this.diffDriveSubsystem);
-
     }
 
     @Override
@@ -20,7 +18,7 @@ public class TankDrive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        diffDriveSubsystem.tankDrive(RobotContainer.getInstance().getDriverJoystick().getY(), RobotContainer.getInstance().getDriverJoystick().getX());
+        diffDriveSubsystem.arcadeDrive(RobotContainer.getInstance().getDriverJoystick().getY(), RobotContainer.getInstance().getDriverJoystick().getX());
     }
 
     // Called once the command ends or is interrupted.
