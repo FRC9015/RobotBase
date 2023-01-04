@@ -1,7 +1,9 @@
 package frc.robot.subsystems.drive;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,13 +34,16 @@ public class DiffDriveSubsystem extends SubsystemBase {
     }
 
     Constants.DriveConstants driveConstants = new Constants.DriveConstants();
+
     private final MotorControllerGroup left;
-    private final WPI_TalonSRX left1;
-    private final WPI_TalonSRX left2;
+    private final CANSparkMax left1;
+    private final CANSparkMax left2;
     private final MotorControllerGroup right;
-    private final WPI_TalonSRX right1;
-    private final WPI_TalonSRX right2;
+    private final CANSparkMax right1;
+    private final CANSparkMax right2;
     private final DifferentialDrive drive;
+
+    private IdleMode brakeMode = IdleMode.kCoast;
 
     /**
      * Creates a new instance of this DiffDriveSubsystem. This constructor
@@ -46,12 +51,13 @@ public class DiffDriveSubsystem extends SubsystemBase {
      * the {@link #getInstance()} method to get the singleton instance.
      */
     private DiffDriveSubsystem() {
-        left1 = new WPI_TalonSRX(driveConstants.LEFT_FRONT_MOTOR_ID);
-        left2 = new WPI_TalonSRX(driveConstants.LEFT_BACK_MOTOR_ID);
+        MotorType motorType = MotorType.kBrushless;
+        left1 = new CANSparkMax(driveConstants.LEFT_FRONT_MOTOR_ID, motorType);
+        left2 = new CANSparkMax(driveConstants.LEFT_BACK_MOTOR_ID, motorType);
         left = new MotorControllerGroup(left1, left2);
 
-        right1 = new WPI_TalonSRX(driveConstants.RIGHT_FRONT_MOTOR_ID);
-        right2 = new WPI_TalonSRX(driveConstants.RIGHT_BACK_MOTOR_ID);
+        right1 = new CANSparkMax(driveConstants.RIGHT_FRONT_MOTOR_ID, motorType);
+        right2 = new CANSparkMax(driveConstants.RIGHT_BACK_MOTOR_ID, motorType);
         right = new MotorControllerGroup(right1, right2);
 
         // Properly invert motors
@@ -75,5 +81,21 @@ public class DiffDriveSubsystem extends SubsystemBase {
     public void tankDrive(double left, double right) {
         drive.tankDrive(left, right);
     }
+
+    public void setBrakeMode(IdleMode newBrakeMode) {
+        this.brakeMode = newBrakeMode;
+    }
+
+    public void stop() {
+        drive.tankDrive(0,0);
+    }
+
+    public void brakeStop() {
+        IdleMode prevBrakeMode = this.brakeMode;
+        setBrakeMode(IdleMode.kBrake);
+        stop();
+        setBrakeMode(prevBrakeMode);
+    }
+
 }
 
