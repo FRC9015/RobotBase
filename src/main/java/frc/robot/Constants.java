@@ -16,18 +16,14 @@ package frc.robot;
 public final class Constants {
     public static final class DriveConstants {
 
-        public final int LEFT_FRONT_MOTOR_PORT = 4;
-        public final int LEFT_BACK_MOTOR_PORT = 9;
-        public final int RIGHT_FRONT_MOTOR_PORT = 5;
-        public final int RIGHT_BACK_MOTOR_PORT = 1;
+        public final int LEFT_FRONT_MOTOR_ID = 0;
+        public final int LEFT_BACK_MOTOR_ID = 0;
+        public final int RIGHT_FRONT_MOTOR_ID = 0;
+        public final int RIGHT_BACK_MOTOR_ID = 0;
 
-        public final boolean LEFT_DRIVE_INVERTED = false;
-        public final boolean RIGHT_DRIVE_INVERTED = true;
+        public final boolean LEFT_INVERTED = false;
+        public final boolean RIGHT_INVERTED = true;
 
-        public enum DifferentialControlScheme {
-            ARCADE,
-            TANK
-        }
     }
 
 }
