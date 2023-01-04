@@ -20,14 +20,13 @@ public class TankDrive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        System.out.println("TankDrive Executing");
-        diffDriveSubsystem.arcadeDrive(RobotContainer.getInstance().getDriverJoystick().getY(), RobotContainer.getInstance().getDriverJoystick().getX());
+        diffDriveSubsystem.tankDrive(RobotContainer.getInstance().getDriverJoystick().getY(), RobotContainer.getInstance().getDriverJoystick().getX());
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        diffDriveSubsystem.drive(0.0, 0.0);
+        diffDriveSubsystem.tankDrive(0.0, 0.0);
     }
 
     // Returns true when the command should end.
